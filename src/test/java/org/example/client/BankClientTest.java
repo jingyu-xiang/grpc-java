@@ -44,15 +44,13 @@ public class BankClientTest {
         .setAccountNumber(2)
         .build();
 
-    final Balance balance = this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
-
-    System.out.println(balance);
+   this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
   }
 
   @Test
   public void withdrawTest() {
     final WithdrawAction withdrawActionReq = WithdrawAction.newBuilder()
-        .setAccountNumber(7)
+        .setAccountNumber(4)
         .setAmount(40)
         .build();
 

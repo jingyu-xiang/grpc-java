@@ -26,12 +26,12 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
       balanceFromDb = -1;
     }
 
-    System.out.println(balanceFromDb);
-
     final Balance balance = Balance.newBuilder()
         .setAmount(balanceFromDb)
         .build();
 
+    // if all the field of a rpc message is the default value, then the message will show as an empty object
+    System.out.println(balance.getAmount());
     responseObserver.onNext(balance);
     responseObserver.onCompleted();
   }
