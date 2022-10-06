@@ -8,13 +8,7 @@ import java.util.stream.IntStream;
 public class AccountDatabase {
 
   /**
-   * mockup db:
-   *  {
-   *    1: 10,
-   *    2: 20,
-   *    ...
-   *    10: 100
-   *  }
+   * mockup db: { 1: 10, 2: 20, ... 10: 100 }
    */
 
   private static final Map<Integer, Integer> MAP = IntStream

@@ -1,10 +1,13 @@
 package org.example.server;
 
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;
 import org.example.models.Balance;
 import org.example.models.BalanceCheck;
 import org.example.models.BankServiceGrpc;
-import io.grpc.stub.StreamObserver;
+import org.example.models.Money;
+import org.example.models.WithdrawAction;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
@@ -33,4 +36,31 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
     responseObserver.onCompleted();
   }
 
+  @Override
+  public void withDraw(
+      WithdrawAction request,
+      StreamObserver<Money> responseObserver
+  ) {
+    int accountNumber = request.getAccountNumber();
+    int amount = request.getAmount(); // 10, 20 ,30
+    int balance = AccountDatabase.getBalance(accountNumber);
+
+    if (balance < amount) {
+      final Status status = Status.FAILED_PRECONDITION.withDescription(
+          "No enough money, you only have " + balance
+      );
+      responseObserver.onError(status.asException());
+      return;
+    }
+
+    // all validations passed
+    // each time deduct $10
+    for (int i = 0; i < (amount / 10); i++) {
+      final Money money = Money.newBuilder().setValue(10).build();
+      responseObserver.onNext(money);
+      AccountDatabase.deductBalance(accountNumber, 10);
+    }
+
+    responseObserver.onCompleted();
+  }
 }
