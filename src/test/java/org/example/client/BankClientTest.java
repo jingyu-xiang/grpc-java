@@ -2,14 +2,16 @@ package org.example.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
-import org.example.models.BalanceCheck;
+import org.example.models.BalanceCheckRequest;
 import org.example.models.BankServiceGrpc;
 import org.example.models.BankServiceGrpc.BankServiceBlockingStub;
 import org.example.models.BankServiceGrpc.BankServiceStub;
+import org.example.models.DepositRequest;
 import org.example.models.Money;
-import org.example.models.WithdrawAction;
+import org.example.models.WithdrawRequest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -39,7 +41,7 @@ public class BankClientTest {
 
   @Test
   public void balanceTest() {
-    final BalanceCheck balanceCheckRequest = BalanceCheck.newBuilder()
+    final BalanceCheckRequest balanceCheckRequest = BalanceCheckRequest.newBuilder()
         .setAccountNumber(2)
         .build();
 
@@ -48,13 +50,13 @@ public class BankClientTest {
 
   @Test
   public void withdrawTest() {
-    final WithdrawAction withdrawActionReq = WithdrawAction.newBuilder()
+    final WithdrawRequest withdrawReq = WithdrawRequest.newBuilder()
         .setAccountNumber(4)
         .setAmount(40)
         .build();
 
     final Iterator<Money> moneyIterator = this.bankServiceBlockingStub
-        .withDraw(withdrawActionReq);
+        .withDraw(withdrawReq);
 
     moneyIterator.forEachRemaining(
         money -> System.out.println("received: " + money.getValue())
@@ -67,15 +69,35 @@ public class BankClientTest {
   public void withdrawAsyncTest() throws InterruptedException {
     CountDownLatch countDownLatch = new CountDownLatch(1); // for test
 
-    final WithdrawAction withdrawReq = WithdrawAction.newBuilder()
+    final WithdrawRequest withdrawReq = WithdrawRequest.newBuilder()
         .setAccountNumber(10)
         .setAmount(50)
         .build();
 
-    this.bankServiceStub.withDraw(
+    bankServiceStub.withDraw(
         withdrawReq,
-        new MoneyStreamingResponse(countDownLatch)
+        new MoneyStreamResponse(countDownLatch)
     );
+
+    countDownLatch.await(); // for test
+  }
+
+  @Test
+  public void depositAsyncTest() throws InterruptedException {
+    CountDownLatch countDownLatch = new CountDownLatch(1); // for test
+
+    // setup a request stream
+    final StreamObserver<DepositRequest> requestStreamObserver =
+        bankServiceStub.deposit(new BalanceResponse(countDownLatch));
+
+    // deposit 10 times, each time 10 dollars
+    for (int i = 0; i < 10; i++) {
+      final DepositRequest deposit =
+          DepositRequest.newBuilder().setAccountNumber(8).setAmount(10).build();
+      requestStreamObserver.onNext(deposit);
+    }
+
+    requestStreamObserver.onCompleted();
 
     countDownLatch.await(); // for test
   }

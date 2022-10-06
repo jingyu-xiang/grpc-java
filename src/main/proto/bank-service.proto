@@ -3,28 +3,37 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "org.example.models";
 
-message BalanceCheck {
-  int32 accountNumber = 1;
-}
-
 message Balance {
   int32 amount = 1;
-}
-
-message WithdrawAction {
-  int32 accountNumber = 1;
-  int32 amount = 2;
 }
 
 message Money {
   int32 value = 1;
 }
 
+message BalanceCheckRequest {
+  int32 accountNumber = 1;
+}
+
+message WithdrawRequest {
+  int32 accountNumber = 1;
+  int32 amount = 2;
+}
+
+message DepositRequest {
+  int32 accountNumber = 1;
+  int32 amount = 2;
+}
+
 service BankService {
 
   // unary
-  rpc getBalance(BalanceCheck) returns (Balance);
+  rpc getBalance(BalanceCheckRequest) returns (Balance);
 
   // server stream
-  rpc withDraw(WithdrawAction) returns (stream Money);
+  rpc withDraw(WithdrawRequest) returns (stream Money);
+
+  // client stream
+  rpc deposit(stream DepositRequest) returns (Balance);
+
 }

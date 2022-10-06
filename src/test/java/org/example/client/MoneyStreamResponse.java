@@ -4,11 +4,11 @@ import io.grpc.stub.StreamObserver;
 import java.util.concurrent.CountDownLatch;
 import org.example.models.Money;
 
-public class MoneyStreamingResponse implements StreamObserver<Money> {
+public class MoneyStreamResponse implements StreamObserver<Money> {
 
   private final CountDownLatch countDownLatch;
 
-  public MoneyStreamingResponse(CountDownLatch countDownLatch) {
+  public MoneyStreamResponse(CountDownLatch countDownLatch) {
     this.countDownLatch = countDownLatch;
   }
 

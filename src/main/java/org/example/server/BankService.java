@@ -4,21 +4,22 @@ import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;
 import org.example.models.Balance;
-import org.example.models.BalanceCheck;
+import org.example.models.BalanceCheckRequest;
 import org.example.models.BankServiceGrpc;
+import org.example.models.DepositRequest;
 import org.example.models.Money;
-import org.example.models.WithdrawAction;
+import org.example.models.WithdrawRequest;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
   @Override
   public void getBalance(
-      BalanceCheck request, // request
+      BalanceCheckRequest request, // request
       StreamObserver<Balance> responseObserver // response
   ) {
     final int accountNumber = request.getAccountNumber();
 
-    Integer balanceFromDb;
+    int balanceFromDb;
 
     try {
       balanceFromDb = AccountDatabase.getBalance(accountNumber);
@@ -30,15 +31,23 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
         .setAmount(balanceFromDb)
         .build();
 
-    // if all the field of a rpc message is the default value, then the message will show as an empty object
+    // if all the field of a rpc message is the default value,
+    // then the message will show as an empty object
     System.out.println(balance.getAmount());
     responseObserver.onNext(balance);
     responseObserver.onCompleted();
   }
 
   @Override
+  public StreamObserver<DepositRequest> deposit(
+      StreamObserver<Balance> responseObserver // response
+  ) {
+    return new DepositStreamRequest(responseObserver);
+  }
+
+  @Override
   public void withDraw(
-      WithdrawAction request,
+      WithdrawRequest request,
       StreamObserver<Money> responseObserver
   ) {
     int accountNumber = request.getAccountNumber();
