@@ -4,7 +4,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
-import org.example.models.Balance;
 import org.example.models.BalanceCheck;
 import org.example.models.BankServiceGrpc;
 import org.example.models.BankServiceGrpc.BankServiceBlockingStub;
@@ -44,7 +43,7 @@ public class BankClientTest {
         .setAccountNumber(2)
         .build();
 
-   this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
+    this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
   }
 
   @Test
