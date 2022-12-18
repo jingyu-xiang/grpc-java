@@ -3,12 +3,7 @@ package org.example.server;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;
-import org.example.models.Balance;
-import org.example.models.BalanceCheckRequest;
-import org.example.models.BankServiceGrpc;
-import org.example.models.DepositRequest;
-import org.example.models.Money;
-import org.example.models.WithdrawRequest;
+import org.example.models.*;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
@@ -42,8 +37,7 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
   public StreamObserver<DepositRequest> deposit(
       StreamObserver<Balance> responseObserver // response
   ) {
-    final DepositStreamRequest depositStreamRequest = new DepositStreamRequest(responseObserver);
-    return depositStreamRequest;
+    return new DepositStreamRequest(responseObserver);
   }
 
   @Override

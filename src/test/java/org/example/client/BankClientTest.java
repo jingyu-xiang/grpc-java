@@ -3,19 +3,16 @@ package org.example.client;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import java.util.Iterator;
-import java.util.concurrent.CountDownLatch;
-import org.example.models.BalanceCheckRequest;
-import org.example.models.BankServiceGrpc;
+import org.example.models.*;
 import org.example.models.BankServiceGrpc.BankServiceBlockingStub;
 import org.example.models.BankServiceGrpc.BankServiceStub;
-import org.example.models.DepositRequest;
-import org.example.models.Money;
-import org.example.models.WithdrawRequest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+
+import java.util.Iterator;
+import java.util.concurrent.CountDownLatch;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class BankClientTest {

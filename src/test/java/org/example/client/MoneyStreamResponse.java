@@ -1,8 +1,9 @@
 package org.example.client;
 
 import io.grpc.stub.StreamObserver;
-import java.util.concurrent.CountDownLatch;
 import org.example.models.Money;
+
+import java.util.concurrent.CountDownLatch;
 
 public class MoneyStreamResponse implements StreamObserver<Money> {
 
