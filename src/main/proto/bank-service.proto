@@ -26,7 +26,6 @@ message DepositRequest {
 }
 
 service BankService {
-
   // unary
   rpc getBalance(BalanceCheckRequest) returns (Balance);
 
@@ -35,5 +34,4 @@ service BankService {
 
   // client stream
   rpc deposit(stream DepositRequest) returns (Balance);
-
 }
