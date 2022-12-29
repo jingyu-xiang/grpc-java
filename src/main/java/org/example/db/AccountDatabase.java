@@ -14,9 +14,8 @@ public class AccountDatabase {
   private static final Map<Integer, Integer> MAP = IntStream
       .rangeClosed(1, 10)
       .boxed()
-      .collect(Collectors.toMap(
-          Function.identity(),
-          v -> v * 10)
+      .collect(
+          Collectors.toMap(Function.identity(), v -> 100)
       );
 
   public static int getBalance(int accountId) {

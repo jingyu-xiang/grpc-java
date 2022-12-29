@@ -3,7 +3,12 @@ package org.example.server;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;
-import org.example.models.*;
+import org.example.models.Balance;
+import org.example.models.BalanceCheckRequest;
+import org.example.models.BankServiceGrpc;
+import org.example.models.DepositRequest;
+import org.example.models.Money;
+import org.example.models.WithdrawRequest;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
