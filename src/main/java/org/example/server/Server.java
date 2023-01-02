@@ -1,15 +1,14 @@
 package org.example.server;
 
-import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
 
-public class GrpcServer {
+public class Server {
 
   public static void main(String[] args) throws IOException, InterruptedException {
-    final Server server = ServerBuilder
-        .forPort(5555)
+    final io.grpc.Server server = ServerBuilder
+        .forPort(6565)
         .addService(new BankService())
         .build();
 
@@ -17,4 +16,5 @@ public class GrpcServer {
     System.out.println("server running on port " + 6565);
     server.awaitTermination();
   }
+
 }

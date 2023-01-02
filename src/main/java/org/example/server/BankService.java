@@ -15,7 +15,7 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
   @Override
   public void getBalance(
       BalanceCheckRequest request, // request
-      StreamObserver<Balance> responseObserver // response
+      StreamObserver<Balance> responseObserver // response observer, observing Balance object
   ) {
     final int accountNumber = request.getAccountNumber();
 
@@ -34,6 +34,7 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
     // if all the field of a rpc message is the default value,
     // then the message will show as an empty object
     System.out.println(balance.getAmount());
+
     responseObserver.onNext(balance);
     responseObserver.onCompleted();
   }
@@ -72,4 +73,5 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
     responseObserver.onCompleted();
   }
+
 }

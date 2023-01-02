@@ -74,11 +74,9 @@
                 <version>0.6.1</version>
                 <configuration>
                     <pluginId>grpc-java</pluginId>
-                    <!--suppress UnresolvedMavenProperty -->
                     <protocArtifact>
                         com.google.protobuf:protoc:3.21.1:exe:${os.detected.classifier}
                     </protocArtifact>
-                    <!--suppress UnresolvedMavenProperty -->
                     <pluginArtifact>
                         io.grpc:protoc-gen-grpc-java:1.51.0:exe:${os.detected.classifier}
                     </pluginArtifact>

@@ -3,6 +3,7 @@ package org.example.client;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import org.example.models.Balance;
 import org.example.models.BalanceCheckRequest;
 import org.example.models.BankServiceGrpc;
 import org.example.models.BankServiceGrpc.BankServiceBlockingStub;
@@ -43,10 +44,11 @@ public class BankClientTest {
   @Test
   public void balanceTest() {
     final BalanceCheckRequest balanceCheckRequest = BalanceCheckRequest.newBuilder()
-        .setAccountNumber(2)
+        .setAccountNumber(3)
         .build();
 
-    this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
+    final Balance balance = this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
+    System.out.println(balance);
   }
 
   @Test

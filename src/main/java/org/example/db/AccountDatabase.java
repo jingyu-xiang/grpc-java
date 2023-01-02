@@ -5,11 +5,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * mockup db: { 1: 100, 2: 100, ... 10: 100 }
+ */
 public class AccountDatabase {
-
-  /**
-   * mockup db: { 1: 10, 2: 20, ... 10: 100 }
-   */
 
   private static final Map<Integer, Integer> MAP = IntStream
       .rangeClosed(1, 10)
@@ -29,4 +28,5 @@ public class AccountDatabase {
   public static void deductBalance(int accountId, int amount) {
     MAP.computeIfPresent(accountId, (k, v) -> v - amount);
   }
+
 }

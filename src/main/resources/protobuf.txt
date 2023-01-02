@@ -33,3 +33,13 @@ changing type
 renaming fields is ok
 
 
+** RPC types **
+* Types
+1. unary
+2. server-stream
+3. client-stream
+
+* Terminologies
+1. stub === receiver, or grpc client
+
+
