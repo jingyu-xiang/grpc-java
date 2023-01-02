@@ -3,6 +3,8 @@ package org.example.client;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import org.example.client.response.BalanceStreamResponse;
+import org.example.client.response.MoneyStreamResponse;
 import org.example.models.Balance;
 import org.example.models.BalanceCheckRequest;
 import org.example.models.BankServiceGrpc;

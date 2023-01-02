@@ -1,4 +1,4 @@
-package org.example.server;
+package org.example.server.request;
 
 import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;

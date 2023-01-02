@@ -9,6 +9,7 @@ import org.example.models.BankServiceGrpc;
 import org.example.models.DepositRequest;
 import org.example.models.Money;
 import org.example.models.WithdrawRequest;
+import org.example.server.request.DepositStreamRequest;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
@@ -35,10 +36,6 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
     final Balance balance = Balance.newBuilder()
         .setAmount(balanceFromDb)
         .build();
-
-    // if all the field of a rpc message is the default value,
-    // then the message will show as an empty object
-    System.out.println(balance.getAmount());
 
     responseObserver.onNext(balance);
     responseObserver.onCompleted();
