@@ -79,7 +79,7 @@ public class BankClientTest {
 
     bankServiceStub.withDraw(
         withdrawReq,
-        new MoneyStreamResponse(countDownLatch)
+        new MoneyStreamRes(countDownLatch)
     );
 
     countDownLatch.await(); // for test

@@ -5,13 +5,13 @@ import org.example.db.AccountDatabase;
 import org.example.models.Balance;
 import org.example.models.DepositRequest;
 
-public class DepositStreamRequest implements StreamObserver<DepositRequest> {
+public class DepositStreamReq implements StreamObserver<DepositRequest> {
 
   private final StreamObserver<Balance> responseObserver;
 
   private int accountBalance;
 
-  public DepositStreamRequest(StreamObserver<Balance> responseObserver) {
+  public DepositStreamReq(StreamObserver<Balance> responseObserver) {
     this.responseObserver = responseObserver;
   }
 
