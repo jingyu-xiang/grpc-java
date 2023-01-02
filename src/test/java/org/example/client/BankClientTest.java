@@ -3,8 +3,8 @@ package org.example.client;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import org.example.client.response.BalanceStreamResponse;
-import org.example.client.response.MoneyStreamResponse;
+import org.example.client.response.BalanceResponseObserver;
+import org.example.client.response.MoneyResponseObserver;
 import org.example.models.Balance;
 import org.example.models.BalanceCheckRequest;
 import org.example.models.BankServiceGrpc;
@@ -83,7 +83,7 @@ public class BankClientTest {
 
     bankServiceStub.withDraw(
         withdrawRequest, // request to send
-        new MoneyStreamResponse(countDownLatch) // response receiver, receiving Money object(s)
+        new MoneyResponseObserver(countDownLatch) // response receiver, receiving Money object(s)
     );
 
     countDownLatch.await(); // for test
@@ -93,9 +93,9 @@ public class BankClientTest {
   public void depositAsyncTest() throws InterruptedException {
     CountDownLatch countDownLatch = new CountDownLatch(1); // for test
 
-    final BalanceStreamResponse balanceStreamResponse = new BalanceStreamResponse(countDownLatch);
-    final StreamObserver<DepositRequest> depositReqObserver = bankServiceStub
-        .deposit(balanceStreamResponse);
+    final BalanceResponseObserver balanceResponseObserver = new BalanceResponseObserver(countDownLatch);
+    final StreamObserver<DepositRequest> depositRequestObserver = bankServiceStub
+        .deposit(balanceResponseObserver);
 
     // deposit 3 times, each time 10 dollars
     for (int i = 0; i < 3; i++) {
@@ -104,10 +104,10 @@ public class BankClientTest {
           .setAmount(10)
           .build();
 
-      depositReqObserver.onNext(depositRequest);
+      depositRequestObserver.onNext(depositRequest);
     }
 
-    depositReqObserver.onCompleted();
+    depositRequestObserver.onCompleted();
 
     countDownLatch.await(); // for test
   }

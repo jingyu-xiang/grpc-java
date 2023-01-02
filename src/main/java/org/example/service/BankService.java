@@ -1,4 +1,4 @@
-package org.example.server;
+package org.example.service;
 
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -9,7 +9,7 @@ import org.example.models.BankServiceGrpc;
 import org.example.models.DepositRequest;
 import org.example.models.Money;
 import org.example.models.WithdrawRequest;
-import org.example.server.request.DepositStreamRequest;
+import org.example.service.request.DepositRequestObserver;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
@@ -83,7 +83,7 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
   public StreamObserver<DepositRequest> deposit(
       StreamObserver<Balance> responseObserver // response emitter, emitting Balance object(s)
   ) {
-    return new DepositStreamRequest(responseObserver); // request receiver, receiving DepositRequest object(s)
+    return new DepositRequestObserver(responseObserver); // request receiver, receiving DepositRequest object(s)
   }
 
 }

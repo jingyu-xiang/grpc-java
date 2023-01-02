@@ -1,17 +1,17 @@
-package org.example.server.request;
+package org.example.service.request;
 
 import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;
 import org.example.models.Balance;
 import org.example.models.DepositRequest;
 
-public class DepositStreamRequest implements StreamObserver<DepositRequest> {
+public class DepositRequestObserver implements StreamObserver<DepositRequest> {
 
   private final StreamObserver<Balance> responseObserver;
 
   private int accountBalance;
 
-  public DepositStreamRequest(StreamObserver<Balance> responseObserver) {
+  public DepositRequestObserver(StreamObserver<Balance> responseObserver) {
     this.responseObserver = responseObserver;
   }
 

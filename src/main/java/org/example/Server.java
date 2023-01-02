@@ -1,6 +1,8 @@
-package org.example.server;
+package org.example;
 
 import io.grpc.ServerBuilder;
+import org.example.service.BankService;
+import org.example.service.TransferService;
 
 import java.io.IOException;
 
@@ -10,6 +12,7 @@ public class Server {
     final io.grpc.Server server = ServerBuilder
         .forPort(6565)
         .addService(new BankService())
+        .addService(new TransferService())
         .build();
 
     server.start();
