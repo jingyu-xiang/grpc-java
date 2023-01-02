@@ -15,7 +15,7 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
   @Override
   public void getBalance(
       BalanceCheckRequest request, // request
-      StreamObserver<Balance> responseObserver // response observer, observing Balance object
+      StreamObserver<Balance> responseObserver // response emitter, emitting Balance object(s)
   ) {
     final int accountNumber = request.getAccountNumber();
 
@@ -40,19 +40,12 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
   }
 
   @Override
-  public StreamObserver<DepositRequest> deposit(
-      StreamObserver<Balance> responseObserver // response
-  ) {
-    return new DepositStreamReq(responseObserver);
-  }
-
-  @Override
   public void withDraw(
-      WithdrawRequest request,
-      StreamObserver<Money> responseObserver
+      WithdrawRequest request, // request
+      StreamObserver<Money> responseObserver // response emitter, emitting Money object(s)
   ) {
     int accountNumber = request.getAccountNumber();
-    int amount = request.getAmount(); // 10, 20 ,30
+    int amount = request.getAmount();
     int balance = AccountDatabase.getBalance(accountNumber);
 
     if (balance < amount) {
@@ -72,6 +65,13 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
     }
 
     responseObserver.onCompleted();
+  }
+
+  @Override
+  public StreamObserver<DepositRequest> deposit(
+      StreamObserver<Balance> responseObserver // response
+  ) {
+    return new DepositStreamReq(responseObserver);
   }
 
 }

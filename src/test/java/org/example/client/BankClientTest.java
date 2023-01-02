@@ -23,7 +23,6 @@ import java.util.concurrent.CountDownLatch;
 public class BankClientTest {
 
   private BankServiceBlockingStub bankServiceBlockingStub;
-
   private BankServiceStub bankServiceStub;
 
   @BeforeAll
@@ -61,11 +60,14 @@ public class BankClientTest {
     final Iterator<Money> moneyIterator = this.bankServiceBlockingStub
         .withDraw(withdrawReq);
 
-    moneyIterator.forEachRemaining(
-        money -> System.out.println("received: " + money.getValue())
-    );
-
-    System.out.println("done!");
+    try {
+      moneyIterator.forEachRemaining(
+          money -> System.out.println("received: " + money.getValue())
+      );
+      System.out.println("done!");
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   @Test
@@ -78,8 +80,8 @@ public class BankClientTest {
         .build();
 
     bankServiceStub.withDraw(
-        withdrawReq,
-        new MoneyStreamRes(countDownLatch)
+        withdrawReq, // request to send
+        new MoneyStreamRes(countDownLatch) // response receiver, receiving Money object(s)
     );
 
     countDownLatch.await(); // for test
