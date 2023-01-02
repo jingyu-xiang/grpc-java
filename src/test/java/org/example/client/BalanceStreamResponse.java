@@ -5,11 +5,11 @@ import org.example.models.Balance;
 
 import java.util.concurrent.CountDownLatch;
 
-public class BalanceResponse implements StreamObserver<Balance> {
+public class BalanceStreamResponse implements StreamObserver<Balance> {
 
   private final CountDownLatch latch;
 
-  public BalanceResponse(CountDownLatch latch) {
+  public BalanceStreamResponse(CountDownLatch latch) {
     this.latch = latch;
   }
 

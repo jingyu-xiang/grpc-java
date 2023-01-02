@@ -5,13 +5,13 @@ import org.example.db.AccountDatabase;
 import org.example.models.Balance;
 import org.example.models.DepositRequest;
 
-public class DepositStreamReq implements StreamObserver<DepositRequest> {
+public class DepositStreamRequest implements StreamObserver<DepositRequest> {
 
   private final StreamObserver<Balance> responseObserver;
 
   private int accountBalance;
 
-  public DepositStreamReq(StreamObserver<Balance> responseObserver) {
+  public DepositStreamRequest(StreamObserver<Balance> responseObserver) {
     this.responseObserver = responseObserver;
   }
 
@@ -30,6 +30,8 @@ public class DepositStreamReq implements StreamObserver<DepositRequest> {
   @Override
   public void onCompleted() {
     final Balance balance = Balance.newBuilder().setAmount(accountBalance).build();
+
+    // trigger a response emitter to emit response to client
     responseObserver.onNext(balance);
     responseObserver.onCompleted();
   }

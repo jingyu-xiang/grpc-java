@@ -12,6 +12,11 @@ import org.example.models.WithdrawRequest;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
+  /**
+   * unary demo
+   * @param request BalanceCheckRequest
+   * @param responseObserver StreamObserver<Balance>
+   */
   @Override
   public void getBalance(
       BalanceCheckRequest request, // request
@@ -39,6 +44,11 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
     responseObserver.onCompleted();
   }
 
+  /**
+   * server stream demo
+   * @param request WithdrawRequest
+   * @param responseObserver StreamObserver<Money>
+   */
   @Override
   public void withDraw(
       WithdrawRequest request, // request
@@ -67,11 +77,16 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
     responseObserver.onCompleted();
   }
 
+  /**
+   *
+   * @param responseObserver StreamObserver<Balance>
+   * @return DepositStreamReq
+   */
   @Override
   public StreamObserver<DepositRequest> deposit(
-      StreamObserver<Balance> responseObserver // response
+      StreamObserver<Balance> responseObserver // response emitter, emitting Balance object(s)
   ) {
-    return new DepositStreamReq(responseObserver);
+    return new DepositStreamRequest(responseObserver); // request receiver, receiving DepositRequest object(s)
   }
 
 }

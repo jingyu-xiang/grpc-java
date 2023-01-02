@@ -5,11 +5,11 @@ import org.example.models.Money;
 
 import java.util.concurrent.CountDownLatch;
 
-public class MoneyStreamRes implements StreamObserver<Money> {
+public class MoneyStreamResponse implements StreamObserver<Money> {
 
   private final CountDownLatch countDownLatch;
 
-  public MoneyStreamRes(CountDownLatch countDownLatch) {
+  public MoneyStreamResponse(CountDownLatch countDownLatch) {
     this.countDownLatch = countDownLatch;
   }
 

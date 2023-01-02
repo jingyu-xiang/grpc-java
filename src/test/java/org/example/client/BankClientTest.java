@@ -46,19 +46,19 @@ public class BankClientTest {
         .setAccountNumber(3)
         .build();
 
-    final Balance balance = this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
-    System.out.println(balance);
+    final Balance balanceResponse = this.bankServiceBlockingStub.getBalance(balanceCheckRequest);
+    System.out.println(balanceResponse);
   }
 
   @Test
   public void withdrawTest() {
-    final WithdrawRequest withdrawReq = WithdrawRequest.newBuilder()
+    final WithdrawRequest withdrawRequest = WithdrawRequest.newBuilder()
         .setAccountNumber(4)
         .setAmount(40)
         .build();
 
     final Iterator<Money> moneyIterator = this.bankServiceBlockingStub
-        .withDraw(withdrawReq);
+        .withDraw(withdrawRequest);
 
     try {
       moneyIterator.forEachRemaining(
@@ -74,14 +74,14 @@ public class BankClientTest {
   public void withdrawAsyncTest() throws InterruptedException {
     CountDownLatch countDownLatch = new CountDownLatch(1); // for test
 
-    final WithdrawRequest withdrawReq = WithdrawRequest.newBuilder()
+    final WithdrawRequest withdrawRequest = WithdrawRequest.newBuilder()
         .setAccountNumber(10)
         .setAmount(50)
         .build();
 
     bankServiceStub.withDraw(
-        withdrawReq, // request to send
-        new MoneyStreamRes(countDownLatch) // response receiver, receiving Money object(s)
+        withdrawRequest, // request to send
+        new MoneyStreamResponse(countDownLatch) // response receiver, receiving Money object(s)
     );
 
     countDownLatch.await(); // for test
@@ -91,18 +91,21 @@ public class BankClientTest {
   public void depositAsyncTest() throws InterruptedException {
     CountDownLatch countDownLatch = new CountDownLatch(1); // for test
 
-    // setup a request stream
-    final StreamObserver<DepositRequest> requestStreamObserver =
-        bankServiceStub.deposit(new BalanceResponse(countDownLatch));
+    final BalanceStreamResponse balanceStreamResponse = new BalanceStreamResponse(countDownLatch);
+    final StreamObserver<DepositRequest> depositReqObserver = bankServiceStub
+        .deposit(balanceStreamResponse);
 
-    // deposit 10 times, each time 10 dollars
-    for (int i = 0; i < 10; i++) {
-      final DepositRequest deposit =
-          DepositRequest.newBuilder().setAccountNumber(8).setAmount(10).build();
-      requestStreamObserver.onNext(deposit);
+    // deposit 3 times, each time 10 dollars
+    for (int i = 0; i < 3; i++) {
+      final DepositRequest depositRequest = DepositRequest.newBuilder()
+          .setAccountNumber(8)
+          .setAmount(10)
+          .build();
+
+      depositReqObserver.onNext(depositRequest);
     }
 
-    requestStreamObserver.onCompleted();
+    depositReqObserver.onCompleted();
 
     countDownLatch.await(); // for test
   }
