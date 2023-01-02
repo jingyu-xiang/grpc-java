@@ -18,19 +18,19 @@
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>
-            <version>1.49.0</version>
+            <version>1.51.0</version>
         </dependency>
 
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.49.0</version>
+            <version>1.51.0</version>
         </dependency>
 
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-stub</artifactId>
-            <version>1.49.0</version>
+            <version>1.51.0</version>
         </dependency>
 
         <dependency> <!-- necessary for Java 9+ -->
@@ -73,14 +73,14 @@
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
                 <configuration>
+                    <pluginId>grpc-java</pluginId>
                     <!--suppress UnresolvedMavenProperty -->
                     <protocArtifact>
                         com.google.protobuf:protoc:3.21.1:exe:${os.detected.classifier}
                     </protocArtifact>
-                    <pluginId>grpc-java</pluginId>
                     <!--suppress UnresolvedMavenProperty -->
                     <pluginArtifact>
-                        io.grpc:protoc-gen-grpc-java:1.49.0:exe:${os.detected.classifier}
+                        io.grpc:protoc-gen-grpc-java:1.51.0:exe:${os.detected.classifier}
                     </pluginArtifact>
                     <protoSourceRoot>
                         ${basedir}/src/main/proto/

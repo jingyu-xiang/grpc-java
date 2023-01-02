@@ -9,7 +9,7 @@ public class GrpcServer {
 
   public static void main(String[] args) throws IOException, InterruptedException {
     final Server server = ServerBuilder
-        .forPort(6565)
+        .forPort(5555)
         .addService(new BankService())
         .build();
 
