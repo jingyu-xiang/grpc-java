@@ -1,9 +1,9 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.example.grpcflix.user";
+option java_package = "com.example.model.user";
 
-import "common.proto";
+import "common/common.proto";
 
 message UserSearchRequest {
   string login_id = 1;
@@ -12,13 +12,13 @@ message UserSearchRequest {
 message UserResponse {
   string login_id = 1;
   string name = 2;
-  Genre genre = 3;
+  common.Genre genre = 3;
 }
 
 
 message UserGenreUpdateRequest {
   string login_id = 1;
-  Genre genre = 2;
+  common.Genre genre = 2;
 }
 
 service UserService {
