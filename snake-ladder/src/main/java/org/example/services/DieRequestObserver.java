@@ -27,6 +27,7 @@ public class DieRequestObserver implements StreamObserver<Die> {
   public void onNext(Die die) {
     client = getNewPlayerPosition(client, die.getValue());
     if (client.getPosition() != 100) {
+      // server roll his dice and move position
       server = getNewPlayerPosition(server, ThreadLocalRandom.current().nextInt(1, 7));
     }
 

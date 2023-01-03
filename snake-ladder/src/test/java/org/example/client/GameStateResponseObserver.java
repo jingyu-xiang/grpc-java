@@ -31,7 +31,11 @@ public class GameStateResponseObserver implements StreamObserver<GameState> {
       dieRequestObserver.onCompleted(); // this will trigger gameStateResponseObserver.onCompleted();
     } else {
       Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
-      roll();
+
+      // client re-roll his dice
+      int dieVal = ThreadLocalRandom.current().nextInt(1, 7);
+      final Die die = Die.newBuilder().setValue(dieVal).build();
+      dieRequestObserver.onNext(die);
     }
 
     System.out.println("-----------------------");
@@ -49,12 +53,6 @@ public class GameStateResponseObserver implements StreamObserver<GameState> {
 
   public void setDieRequestObserver(StreamObserver<Die> dieStreamObserver) {
     this.dieRequestObserver = dieStreamObserver;
-  }
-
-  public void roll() {
-    int dieVal = ThreadLocalRandom.current().nextInt(1, 7);
-    final Die die = Die.newBuilder().setValue(dieVal).build();
-    dieRequestObserver.onNext(die);
   }
 
 }

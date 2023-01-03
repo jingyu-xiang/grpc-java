@@ -4,6 +4,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ThreadLocalRandom;
 import org.example.models.Die;
 import org.example.models.GameServiceGrpc;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,8 +41,10 @@ public class GameClientTest {
 
     gameStateResponseObserver.setDieRequestObserver(dieRequestObserver);
 
-    // start the game
-    gameStateResponseObserver.roll();
+    // client start the game by rolling the 1st dice
+    int dieVal = ThreadLocalRandom.current().nextInt(1, 7);
+    final Die die = Die.newBuilder().setValue(dieVal).build();
+    dieRequestObserver.onNext(die);
 
     countDownLatch.await(); // test
   }
