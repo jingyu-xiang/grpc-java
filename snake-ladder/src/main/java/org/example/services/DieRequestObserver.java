@@ -11,7 +11,7 @@ public class DieRequestObserver implements StreamObserver<Die> {
 
   private Player client;
   private Player server;
-  final private StreamObserver<GameState> gameStateObserver;
+  final private StreamObserver<GameState> gameStateResponseObserver;
 
   public DieRequestObserver(
       Player client,
@@ -20,7 +20,7 @@ public class DieRequestObserver implements StreamObserver<Die> {
   ) {
     this.client = client;
     this.server = server;
-    this.gameStateObserver = responseObserver;
+    this.gameStateResponseObserver = responseObserver;
   }
 
   @Override
@@ -30,7 +30,7 @@ public class DieRequestObserver implements StreamObserver<Die> {
       server = getNewPlayerPosition(server, ThreadLocalRandom.current().nextInt(1, 7));
     }
 
-    gameStateObserver.onNext(getGameState());
+    gameStateResponseObserver.onNext(getGameState());
   }
 
   @Override
@@ -38,7 +38,7 @@ public class DieRequestObserver implements StreamObserver<Die> {
 
   @Override
   public void onCompleted() {
-    gameStateObserver.onCompleted();
+    gameStateResponseObserver.onCompleted();
   }
 
   private GameState getGameState() {
@@ -59,6 +59,6 @@ public class DieRequestObserver implements StreamObserver<Die> {
           .build();
     }
 
-    return  player;
+    return player;
   }
 }
