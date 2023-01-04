@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,10 +11,11 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-@Entity @Table(name = "ms_user")
+@Entity @Table(name ="ms_user")
 @Getter @Setter @ToString @RequiredArgsConstructor
 public class User {
   @Id
+  @Column(name = "login_id")
   private String loginId;
   private String name;
   private String genre;

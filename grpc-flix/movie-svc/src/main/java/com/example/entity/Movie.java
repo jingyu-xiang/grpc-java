@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-@Entity @Table(name = "ms_movie")
+@Entity @Table(name="ms_movie")
 @ToString @Getter @Setter @RequiredArgsConstructor
 public class Movie {
     @Id

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserGenreVo {
+public class UpdateGenreParam {
 
   private String loginId;
 

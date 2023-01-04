@@ -9,7 +9,7 @@ import com.example.model.user.UserResponse;
 import com.example.model.user.UserSearchRequest;
 import com.example.model.user.UserServiceGrpc.UserServiceBlockingStub;
 import com.example.vo.MovieVo;
-import com.example.vo.UserGenreVo;
+import com.example.vo.UpdateGenreParam;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 public class AggregatorService {
 
   @GrpcClient("movie-service")
-  private UserServiceBlockingStub userStub;
+  private MovieServiceBlockingStub movieStub;
 
   @GrpcClient("user-service")
-  private MovieServiceBlockingStub movieStub;
+  private UserServiceBlockingStub userStub;
 
   public List<MovieVo> getUserMovies(String loginId) {
     final UserSearchRequest userSearchRequest = UserSearchRequest.newBuilder()
@@ -37,14 +37,16 @@ public class AggregatorService {
 
     return movieSearchResponse.getMoviesList()
         .stream()
-        .map(movieDto -> new MovieVo(movieDto.getTitle(), movieDto.getYear(), movieDto.getRating()))
+        .map(movieDto ->
+            new MovieVo(movieDto.getTitle(), movieDto.getYear(), movieDto.getRating())
+        )
         .collect(Collectors.toList());
   }
 
-  public void updateUserGenre(UserGenreVo userGenreVo) {
+  public void updateUserGenre(UpdateGenreParam updateGenreParam) {
     final UserGenreUpdateRequest userGenreUpdateRequest = UserGenreUpdateRequest.newBuilder()
-        .setLoginId(userGenreVo.getLoginId())
-        .setGenre(Genre.valueOf(userGenreVo.getGenre().toUpperCase()))
+        .setLoginId(updateGenreParam.getLoginId())
+        .setGenre(Genre.valueOf(updateGenreParam.getGenre().toUpperCase()))
         .build();
 
     final UserResponse userResponse = userStub.updateUserGenre(userGenreUpdateRequest);

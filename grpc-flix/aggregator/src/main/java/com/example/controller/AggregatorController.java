@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.service.AggregatorService;
 import com.example.vo.MovieVo;
-import com.example.vo.UserGenreVo;
+import com.example.vo.UpdateGenreParam;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +18,12 @@ public class AggregatorController {
   private AggregatorService aggregatorService;
 
   @GetMapping("/user/{loginId}/movies")
-  public List<MovieVo> getMovies(@PathVariable String loginId) {
+  public List<MovieVo> getUserMovies(@PathVariable String loginId) {
     return aggregatorService.getUserMovies(loginId);
   }
 
   @PutMapping("/user/updateGenre")
-  public void setUserGenre(@RequestBody UserGenreVo userGenreVo) {
-    aggregatorService.updateUserGenre(userGenreVo);
+  public void updateUserGenre(@RequestBody UpdateGenreParam updateGenreParam) {
+    aggregatorService.updateUserGenre(updateGenreParam);
   }
 }

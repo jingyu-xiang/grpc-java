@@ -37,5 +37,6 @@ public class MovieService extends MovieServiceImplBase {
         .build();
 
     responseObserver.onNext(movieSearchResponse);
+    responseObserver.onCompleted();
   }
 }
