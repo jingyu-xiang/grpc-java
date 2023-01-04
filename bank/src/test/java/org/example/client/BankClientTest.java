@@ -25,6 +25,7 @@ import java.util.concurrent.CountDownLatch;
 public class BankClientTest {
 
   private BankServiceBlockingStub bankServiceBlockingStub;
+  
   private BankServiceStub bankServiceStub;
 
   @BeforeAll
