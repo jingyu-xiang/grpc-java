@@ -26,12 +26,10 @@ public class UserService extends UserServiceImplBase {
     final Builder responseBuilder = UserResponse.newBuilder();
 
     userRepository.findById(request.getLoginId())
-        .ifPresent(user -> {
-          responseBuilder
-              .setName(user.getName())
-              .setLoginId(user.getLoginId())
-              .setGenre(Genre.valueOf(user.getGenre().toUpperCase()));
-        });
+        .ifPresent(user -> responseBuilder
+            .setName(user.getName())
+            .setLoginId(user.getLoginId())
+            .setGenre(Genre.valueOf(user.getGenre().toUpperCase())));
 
     responseObserver.onNext(responseBuilder.build());
     responseObserver.onCompleted();
