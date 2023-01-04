@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,13 +11,16 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-@Entity @Table(name = "ms_user")
-@Getter @Setter @ToString @RequiredArgsConstructor
-public class User {
-  @Id
-  private String loginId;
-  private String name;
-  private String genre;
+@Entity @Table(name = "ms_movie")
+@ToString @Getter @Setter @RequiredArgsConstructor
+public class Movie {
+    @Id
+    private Integer id;
+    private String title;
+    @Column(name="release_year")
+    private Integer year;
+    private Double rating;
+    private String genre;
 
   @Override
   public boolean equals(Object o) {
@@ -26,8 +30,8 @@ public class User {
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
       return false;
     }
-    User user = (User) o;
-    return loginId != null && Objects.equals(loginId, user.loginId);
+    Movie movie = (Movie) o;
+    return id != null && Objects.equals(id, movie.id);
   }
 
   @Override
