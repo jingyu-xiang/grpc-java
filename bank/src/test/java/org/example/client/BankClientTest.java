@@ -57,13 +57,13 @@ public class BankClientTest {
   public void withdrawTest() {
     final WithdrawRequest withdrawRequest = WithdrawRequest.newBuilder()
         .setAccountNumber(4)
-        .setAmount(40)
+        .setAmount(1000)
         .build();
 
-    final Iterator<Money> moneyIterator = this.bankServiceBlockingStub
-        .withDraw(withdrawRequest);
-
     try {
+      final Iterator<Money> moneyIterator = this.bankServiceBlockingStub
+          .withDraw(withdrawRequest);
+
       moneyIterator.forEachRemaining(
           money -> System.out.println("received: " + money.getValue())
       );
