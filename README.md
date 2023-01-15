@@ -44,5 +44,11 @@
 3. client-stream
 4. bidirectional-stream
 
+## RPC channel
+1. channel: abstract over grpc connection and represents the connection
+2. connection is persistent for a while
+3. connection is lazy-init, meaning it will be established during the first rpc
+4. channel is thread-safe, it can be shared with multiple stubs
+
 * Terminologies
-  1. stub === receiver, or grpc client
+  1. stub: receiver, or grpc client
