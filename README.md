@@ -49,6 +49,4 @@
 2. connection is persistent for a while
 3. connection is lazy-init, meaning it will be established during the first rpc
 4. channel is thread-safe, it can be shared with multiple stubs
-
-* Terminologies
-  1. stub: receiver, or grpc client
+    * stub: receiver, or grpc client
