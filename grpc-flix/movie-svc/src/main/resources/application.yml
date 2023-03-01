@@ -1,6 +1,6 @@
 grpc:
   server:
-    port: 7575
+    port: 3002
 spring:
   jpa:
     defer-datasource-initialization: true
