@@ -24,7 +24,6 @@ public class GameClientTest {
         .forAddress("localhost", 6565)
         .usePlaintext()
         .build();
-
     // async BankService stub
     this.gameServiceStub = GameServiceGrpc.newStub(channel);
   }
@@ -35,7 +34,6 @@ public class GameClientTest {
 
     final GameStateResponseObserver gameStateResponseObserver =
         new GameStateResponseObserver(countDownLatch);
-
     final StreamObserver<Die> dieRequestObserver =
         gameServiceStub.roll(gameStateResponseObserver);
 
