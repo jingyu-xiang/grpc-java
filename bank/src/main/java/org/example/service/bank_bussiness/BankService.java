@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.service.bank_bussiness;
 
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -9,7 +9,7 @@ import org.example.models.BankServiceGrpc;
 import org.example.models.DepositRequest;
 import org.example.models.Money;
 import org.example.models.WithdrawRequest;
-import org.example.service.request.DepositRequestObserver;
+import org.example.service.bank_bussiness.request.DepositRequestObserver;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
 

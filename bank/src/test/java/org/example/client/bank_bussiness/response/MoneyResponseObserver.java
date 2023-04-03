@@ -1,4 +1,4 @@
-package org.example.client.response;
+package org.example.client.bank_bussiness.response;
 
 import io.grpc.stub.StreamObserver;
 import org.example.models.Money;

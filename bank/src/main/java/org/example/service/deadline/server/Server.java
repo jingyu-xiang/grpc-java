@@ -1,8 +1,9 @@
-package org.example;
+package org.example.service.deadline.server;
 
 import io.grpc.ServerBuilder;
-import org.example.service.BankService;
-import org.example.service.TransferService;
+import org.example.service.bank_bussiness.BankService;
+import org.example.service.bank_bussiness.TransferService;
+import org.example.service.deadline.DeadlineService;
 
 import java.io.IOException;
 
@@ -11,8 +12,7 @@ public class Server {
   public static void main(String[] args) throws IOException, InterruptedException {
     final io.grpc.Server server = ServerBuilder
         .forPort(6565)
-        .addService(new BankService())
-        .addService(new TransferService())
+        .addService(new DeadlineService())
         .build();
 
     server.start();

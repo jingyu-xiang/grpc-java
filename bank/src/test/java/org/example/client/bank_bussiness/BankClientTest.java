@@ -1,10 +1,10 @@
-package org.example.client;
+package org.example.client.bank_bussiness;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import org.example.client.response.BalanceResponseObserver;
-import org.example.client.response.MoneyResponseObserver;
+import org.example.client.bank_bussiness.response.DepositResponseObserver;
+import org.example.client.bank_bussiness.response.MoneyResponseObserver;
 import org.example.models.Balance;
 import org.example.models.BalanceCheckRequest;
 import org.example.models.BankServiceGrpc;
@@ -94,9 +94,11 @@ public class BankClientTest {
   public void depositAsyncTest() throws InterruptedException {
     CountDownLatch countDownLatch = new CountDownLatch(1); // for test
 
-    final BalanceResponseObserver balanceResponseObserver = new BalanceResponseObserver(countDownLatch);
+    final DepositResponseObserver depositResponseObserver = new DepositResponseObserver(
+        countDownLatch
+    );
     final StreamObserver<DepositRequest> depositRequestObserver = bankServiceStub
-        .deposit(balanceResponseObserver);
+        .deposit(depositResponseObserver);
 
     // deposit 3 times, each time 10 dollars
     for (int i = 0; i < 3; i++) {

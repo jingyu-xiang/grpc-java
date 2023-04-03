@@ -1,10 +1,10 @@
-package org.example.service;
+package org.example.service.bank_bussiness;
 
 import io.grpc.stub.StreamObserver;
 import org.example.models.TransferRequest;
 import org.example.models.TransferResponse;
 import org.example.models.TransferServiceGrpc;
-import org.example.service.request.TransferRequestObserver;
+import org.example.service.bank_bussiness.request.TransferRequestObserver;
 
 public class TransferService extends TransferServiceGrpc.TransferServiceImplBase {
   @Override

@@ -1,15 +1,15 @@
-package org.example.client.response;
+package org.example.client.bank_bussiness.response;
 
 import io.grpc.stub.StreamObserver;
 import org.example.models.Balance;
 
 import java.util.concurrent.CountDownLatch;
 
-public class BalanceResponseObserver implements StreamObserver<Balance> {
+public class DepositResponseObserver implements StreamObserver<Balance> {
 
   private final CountDownLatch latch;
 
-  public BalanceResponseObserver(CountDownLatch latch) {
+  public DepositResponseObserver(CountDownLatch latch) {
     this.latch = latch;
   }
 

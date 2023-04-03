@@ -1,4 +1,4 @@
-package org.example.service.request;
+package org.example.service.bank_bussiness.request;
 
 import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;
