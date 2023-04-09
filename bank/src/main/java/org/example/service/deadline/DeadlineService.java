@@ -6,7 +6,6 @@ import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.example.db.AccountDatabase;
 import org.example.models.*;
-import org.example.service.bank_bussiness.request.DepositRequestObserver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -81,18 +80,6 @@ public class DeadlineService extends BankServiceGrpc.BankServiceImplBase {
     }
 
     responseObserver.onCompleted();
-  }
-
-  /**
-   *
-   * @param responseObserver StreamObserver<Balance>
-   * @return DepositStreamReq
-   */
-  @Override
-  public StreamObserver<DepositRequest> deposit(
-      StreamObserver<Balance> responseObserver // response emitter, emitting Balance object(s)
-  ) {
-    return new DepositRequestObserver(responseObserver); // request receiver, receiving DepositRequest object(s)
   }
 
 }

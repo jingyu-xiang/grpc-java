@@ -3,7 +3,6 @@ package org.example.client.bank_bussiness;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import org.example.client.bank_bussiness.TransferResponseObserver;
 import org.example.models.TransferRequest;
 import org.example.models.TransferServiceGrpc;
 import org.junit.jupiter.api.BeforeAll;

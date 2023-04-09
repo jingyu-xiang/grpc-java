@@ -1,11 +1,8 @@
 package org.example.client.deadline;
 
-import io.grpc.Deadline;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
-import io.grpc.stub.StreamObserver;
-import org.example.client.bank_bussiness.response.DepositResponseObserver;
 import org.example.client.bank_bussiness.response.MoneyResponseObserver;
 import org.example.models.*;
 import org.example.models.BankServiceGrpc.BankServiceBlockingStub;
@@ -91,31 +88,6 @@ public class DeadlineClientTest {
         withdrawRequest, // request to send
         new MoneyResponseObserver(countDownLatch) // response receiver, receiving Money object(s)
     );
-
-    countDownLatch.await(); // for test
-  }
-
-  @Test
-  public void depositAsyncTest() throws InterruptedException {
-    CountDownLatch countDownLatch = new CountDownLatch(1); // for test
-
-    final DepositResponseObserver depositResponseObserver = new DepositResponseObserver(
-        countDownLatch
-    );
-    final StreamObserver<DepositRequest> depositRequestObserver = bankServiceStub
-        .deposit(depositResponseObserver);
-
-    // deposit 3 times, each time 10 dollars
-    for (int i = 0; i < 3; i++) {
-      final DepositRequest depositRequest = DepositRequest.newBuilder()
-          .setAccountNumber(8)
-          .setAmount(10)
-          .build();
-
-      depositRequestObserver.onNext(depositRequest);
-    }
-
-    depositRequestObserver.onCompleted();
 
     countDownLatch.await(); // for test
   }
