@@ -2,6 +2,7 @@ package org.example.client.metadata;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.MetadataUtils;
 import org.example.models.*;
@@ -43,7 +44,9 @@ public class MetadataClientTest {
           .getBalance(balanceCheckRequest);
       System.out.println(balanceResponse);
     } catch (StatusRuntimeException exception) {
-      exception.printStackTrace();
+      if (exception.getStatus().equals(Status.UNAUTHENTICATED)) {
+        System.out.println("UNAUTHENTICATED!!!");
+      }
     }
   }
 }
